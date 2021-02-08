@@ -1,4 +1,4 @@
-package sk.tobas;
+package sk.tobas.game;
 
 public class GameLauncher {
 

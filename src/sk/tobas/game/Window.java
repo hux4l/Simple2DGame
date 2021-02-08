@@ -1,7 +1,6 @@
-package sk.tobas;
+package sk.tobas.game;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Window extends JFrame {
 

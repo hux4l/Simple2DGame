@@ -1,4 +1,8 @@
-package sk.tobas;
+package sk.tobas.game;
+
+import sk.tobas.game.states.GameStateManager;
+import sk.tobas.game.util.KeyHandler;
+import sk.tobas.game.util.MouseHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +18,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Thread thread;
     private boolean running = false;
+
+    private MouseHandler mouse;
+    private KeyHandler key;
+
+    private GameStateManager gsm;
 
     public GamePanel(int width, int height) {
         GamePanel.width = width;
@@ -33,11 +42,23 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    public void init() {
+        this.running = true;
+
+        img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        g = (Graphics2D) img.getGraphics();
+
+        mouse = new MouseHandler(this);
+        key = new KeyHandler(this);
+
+        gsm = new GameStateManager();
+    }
+
     @Override
     public void run() {
         init();
 
-        final double GAME_HERTZ = 60;
+        final double GAME_HERTZ = 60.0;
         final double TBU = 1000000000 / GAME_HERTZ;      // time before update
 
         final int MUBR = 5;                             // most update before render
@@ -46,7 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
         double lastRenderTime;
 
         final double TARGET_FPS = 60;
-        final double FTBR = 1000000000 / TARGET_FPS;    // final time before update
+        final double TTBR = 1000000000 / TARGET_FPS;    // total time before update
 
         int frameCount = 0;
         int lastSecondTime = (int) (lastUpdateTime / 1000000000);
@@ -58,7 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             while ((now - lastUpdateTime) > TBU && (updateCount < MUBR)) {
                 update();
-                input();
+                input(mouse, key);
                 lastUpdateTime += TBU;
                 updateCount++;
             }
@@ -67,7 +88,7 @@ public class GamePanel extends JPanel implements Runnable {
                 lastUpdateTime = now - TBU;
             }
 
-            input();
+            input(mouse, key);
             render();
             draw();
 
@@ -77,14 +98,14 @@ public class GamePanel extends JPanel implements Runnable {
             int thisSecond = (int) (lastUpdateTime / 1000000000);
             if(thisSecond > lastSecondTime) {
                 if(frameCount != oldFrameCount) {
-                    System.out.println(thisSecond + " : " + frameCount);
+                    System.out.println("New second: " + thisSecond + " : " + frameCount);
                     oldFrameCount = frameCount;
                 }
                 frameCount = 0;
                 lastSecondTime = thisSecond;
             }
 
-            while (now - lastRenderTime < FTBR && now - lastUpdateTime < TBU) {
+            while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {
                 Thread.yield();
 
                 try {
@@ -97,25 +118,19 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void init() {
-        this.running = true;
-
-        img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        g = (Graphics2D) img.getGraphics();
-    }
-
     public void update() {
-
+        gsm.update();
     }
 
-    public void input() {
-
+    public void input(MouseHandler mouse, KeyHandler key) {
+        gsm.input(mouse, key);
     }
 
     public void render() {
         if(g != null) {
             g.setColor(new Color(66,134,244));
             g.fillRect(0,0, width, height);
+            gsm.render(g);
         }
     }
 
