@@ -85,7 +85,7 @@ public abstract class Entity {
         return ani;
     }
 
-    public  void setAnimation(int i, BufferedImage[] frames, int delay) {
+    public void setAnimation(int i, BufferedImage[] frames, int delay) {
         currentAnimation = i;
         ani.setFrames(frames);
         ani.setDelay(delay);
@@ -121,7 +121,7 @@ public abstract class Entity {
             hitBounds.setyOffset(size / 2);
             hitBounds.setxOffset(-size / 2);
         } else if(left) {
-            hitBounds.setyOffset(-size / 2);
+            hitBounds.setyOffset(-size);
             hitBounds.setxOffset(0);
         } else if(right) {
             hitBounds.setyOffset(0);

@@ -54,20 +54,20 @@ public class GameStateManager {
 
     public void update() {
         Vector2f.setWorldVar(map.x, map.y);
-        for (GameState state : states) {
-            state.update();
-        }
+        for (int i = 0; i < states.size(); i++) {
+            states.get(i).update();
+       }
     }
 
     public void input(MouseHandler mouse, KeyHandler key) {
-        for (GameState state : states) {
-            state.input(mouse, key);
+        for (int i = 0; i < states.size(); i++) {
+            states.get(i).input(mouse, key);
         }
     }
 
     public void render(Graphics2D g) {
-        for (GameState state : states) {
-            state.render(g);
+        for (int i = 0; i < states.size(); i++) {
+            states.get(i).render(g);
         }
     }
 }
