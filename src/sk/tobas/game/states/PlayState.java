@@ -1,5 +1,6 @@
 package sk.tobas.game.states;
 
+import sk.tobas.game.GamePanel;
 import sk.tobas.game.entity.Player;
 import sk.tobas.game.graphics.Font;
 import sk.tobas.game.graphics.Sprite;
@@ -17,7 +18,7 @@ public class PlayState extends GameState {
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        font = new Font("font/ZeldaFont.png", 16, 16);
+        font = new Font("font/font.png", 10, 10);
         player = new Player(new Sprite("entity/linkFormatted.png"), new Vector2f(300,300), 128);
     }
 
@@ -33,7 +34,7 @@ public class PlayState extends GameState {
 
     @Override
     public void render(Graphics2D g) {
-        Sprite.drawArray(g, font, "HELLO TOM small works to", new Vector2f(100, 100), 32, 32, 16, 0);
+        Sprite.drawArray(g, font, GamePanel.oldFrameCount + " FPS", new Vector2f(GamePanel.width - 60, 10), 32, 32, 32, 0);
         player.render(g);
     }
 }
