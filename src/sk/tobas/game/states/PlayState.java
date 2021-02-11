@@ -18,16 +18,20 @@ public class PlayState extends GameState {
     private Player player;
     private TileManager tm;
 
+    public static Vector2f map;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        tm = new TileManager("tile/tilemap.xml");
+        map = new Vector2f(32, 32);
 
+        tm = new TileManager("tile/tilemap.xml");
         font = new Font("font/fontFinal.png", 10, 10);
-        player = new Player(new Sprite("entity/linkFormatted.png"), new Vector2f(300,300), 128);
+        player = new Player(new Sprite("entity/linkFormatted.png"), new Vector2f(32 + (GamePanel.width / 2) - 32,32 + (GamePanel.height / 2) - 32), 128);
     }
 
     @Override
     public void update() {
+        Vector2f.setWorldVar(map.x, map.y);
         player.update();
     }
 
