@@ -1,6 +1,7 @@
 package sk.tobas.game.util;
 
 import sk.tobas.game.entity.Entity;
+import sk.tobas.game.tiles.TileMapObj;
 
 public class AABB {
 
@@ -60,6 +61,14 @@ public class AABB {
     public void setWidth(float f) { w = f;}
     public void setHeight(float f) {h = f;}
 
+    public float getXOffset() {
+        return this.xOffset;
+    }
+
+    public float getYOffset() {
+        return this.yOffset;
+    }
+
     public void setxOffset(float f) { xOffset = f;}
     public void setyOffset(float f) { yOffset = f;}
 
@@ -86,5 +95,17 @@ public class AABB {
         float yDelta = cy - Math.max(aBox.pos.getWorldVar().y + (aBox.getHeight() / 2), Math.min(cy, aBox.pos.getWorldVar().y));
 
         return (xDelta * xDelta + yDelta * yDelta) < ((this.r) / Math.sqrt(2) * (this.r) / Math.sqrt(2));
+    }
+
+    public boolean collisionTile(float ax, float ay) {
+        for(int c = 0; c < 4; c++) {
+            int xt = (int) ((pos.x + ax) + (c % 2) * w + xOffset) / 64;
+            int yt = (int) ((pos.y + ay) + (int)(c / 2) * h + yOffset) / 64;
+
+            if(TileMapObj.tmo_blocks.containsKey(String.valueOf(xt) + "," + String.valueOf(yt))) {
+                return TileMapObj.tmo_blocks.get(String.valueOf(xt) + "," + String.valueOf(yt)).update(this);
+            }
+        }
+        return false;
     }
 }

@@ -26,7 +26,7 @@ public class PlayState extends GameState {
 
         tm = new TileManager("tile/tilemap.xml");
         font = new Font("font/fontFinal.png", 10, 10);
-        player = new Player(new Sprite("entity/linkFormatted.png"), new Vector2f(32 + (GamePanel.width / 2) - 32,32 + (GamePanel.height / 2) - 32), 128);
+        player = new Player(new Sprite("entity/linkFormatted.png"), new Vector2f(32 + (GamePanel.width / 2) - 32,32 + (GamePanel.height / 2) - 32), 64);
     }
 
     @Override

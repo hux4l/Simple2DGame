@@ -15,7 +15,6 @@ public class TileMapObj extends TileMap {
 
     public TileMapObj(String data, Sprite sprite, int width, int height, int tileWidth, int tileHeight, int tileColumns) {
         Block tempBlock;
-
         tmo_blocks = new HashMap<String, Block>();
 
         String[] block = data.split(",");
