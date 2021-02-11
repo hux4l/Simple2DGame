@@ -83,11 +83,30 @@ public class Player extends Entity {
     }
 
     public void input(MouseHandler mouse, KeyHandler key) {
-
-        up = key.up.down;
-        down = key.down.down;
-        left = key.left.down;
-        right = key.right.down;
-        attack = key.attack.down;
+        if(key.up.down) {
+            up = true;
+        } else {
+            up = false;
+        }
+        if(key.down.down) {
+            down = true;
+        } else {
+            down = false;
+        }
+        if(key.left.down) {
+            left = true;
+        } else {
+            left = false;
+        }
+        if(key.right.down) {
+            right = true;
+        } else {
+            right = false;
+        }
+        if(key.attack.down) {
+            attack = true;
+        } else {
+            attack = false;
+        }
     }
 }
