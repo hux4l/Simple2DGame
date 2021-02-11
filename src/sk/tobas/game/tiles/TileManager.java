@@ -69,8 +69,9 @@ public class TileManager {
                 }
 
                 data[i] = eElement.getElementsByTagName("data").item(0).getTextContent();
+                System.out.println(data[i]);
 
-                if(i > 1) {
+                if(i >= 1) {
                     tm.add(new TileMapNorm(data[i], sprite, width, height, blockWidth, blockHeight, tileColumns));
                 } else {
                     tm.add(new TileMapObj(data[i], sprite, width, height, blockWidth, blockHeight, tileColumns));
